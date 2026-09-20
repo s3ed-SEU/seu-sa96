@@ -115,14 +115,6 @@ body::before{
   padding:.7rem 1.1rem;
 }
 .brand{ display:flex; align-items:center; gap:.6rem; }
-/* شعار الجامعة كحلي داكن، فيوضع على شريحة بيضاء ليظهر على الهيدر الداكن */
-.brand-logo{
-  width:2.1rem; height:2.1rem; flex:none;
-  background:#fff;
-  border-radius:.45rem;
-  padding:.2rem;
-  object-fit:contain;
-}
 .brand .nm{ font-weight:800; font-size:1rem; }
 .hdr-side{ display:flex; align-items:center; gap:.7rem; }
 .counter{ font-size:.85rem; color:var(--on-ink-mute); font-variant-numeric:tabular-nums; }
@@ -214,14 +206,6 @@ body::before{
   border-radius:.8rem;
   border:1px solid var(--line);
 }
-/* شعار الجامعة كحلي على أبيض: يوضع على شريحة بيضاء حفاظًا على ألوانه الرسمية */
-.ftr-logo{
-  width:100%; max-width:16rem; height:auto;
-  margin-inline:auto;
-  background:#fff;
-  border-radius:.6rem;
-  padding:.55rem .75rem;
-}
 .ftr-in{
   display:flex; align-items:center; justify-content:center; gap:.8rem;
   flex-wrap:wrap;
@@ -229,6 +213,20 @@ body::before{
 }
 .ftr .org{ color:var(--on-ink-mute); font-weight:700; }
 .ftr .meta::before{ content:"·"; margin-inline-end:.8rem; color:var(--on-ink-faint); }
+
+.ftr-help{
+  text-align:center;
+  font-size:.78rem; line-height:1.9;
+  color:var(--on-ink-faint);
+}
+/* البريد نصّ لاتيني داخل فقرة عربية: يُعزل لئلا ينعكس ترتيبه بصريًا */
+.ftr-help a{
+  direction:ltr; unicode-bidi:isolate;
+  display:inline-block;
+  color:var(--green);
+  text-decoration:underline; text-underline-offset:.2rem;
+  word-break:break-all;
+}
 
 /* ---- عناوين الأقسام ---- */
 .secttl{ font-size:1.3rem; font-weight:800; }
@@ -259,12 +257,14 @@ body::before{
   border-radius:var(--radius);
   background:rgba(238,247,242,.02);
   padding:1rem;
-  display:flex; flex-wrap:wrap; align-content:flex-start;
+  /* شبكة لا flex بعرض ثابت: تحت 380px كان لا يتّسع إلا ورقة في الصف */
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(8rem,1fr));
+  align-content:start;
   gap:.8rem;
 }
 .paper{
   --rot:0deg;
-  width:9.5rem;
   padding:.75rem .8rem;
   background:var(--paper);
   color:var(--paper-ink);
@@ -353,7 +353,26 @@ body::before{
   display:flex; align-items:center; justify-content:center;
   font-weight:800; font-size:.85rem; flex:none;
 }
+.order-item .oi-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:.15rem; }
 .order-item .fn{ font-weight:700; font-size:.95rem; }
+.order-item .od{
+  font-size:.75rem; color:var(--on-ink-faint);
+  direction:rtl; unicode-bidi:isolate;
+}
+
+.oi-moves{ display:flex; flex-direction:column; gap:.25rem; flex:none; }
+.mv{
+  width:2.3rem; height:2rem;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line-2);
+  background:rgba(238,247,242,.06);
+  border-radius:.4rem;
+  font-size:.7rem; line-height:1;
+  cursor:pointer;
+  transition:background .15s ease, border-color .15s ease;
+}
+.mv:hover:not(:disabled){ background:rgba(238,247,242,.14); border-color:var(--green); }
+.mv:disabled{ opacity:.28; cursor:not-allowed; }
 .order-item.picked{ outline:2px solid var(--green); outline-offset:2px; }
 .order-item.correct{ outline:2px solid var(--ok); outline-offset:2px; }
 .order-item.correct .pos{ background:rgba(75,207,111,.2); color:var(--ok); }
@@ -400,14 +419,6 @@ body::before{
 .timeline .tl-date{ font-size:.78rem; color:var(--on-ink-faint); font-weight:700; }
 .timeline .tl-name{ font-weight:800; margin-top:.1rem; }
 .timeline .tl-event{ font-size:.88rem; color:var(--on-ink-mute); margin-top:.25rem; }
-.timeline .tl-img{
-  display:block;
-  width:100%; max-width:20rem; height:auto;
-  margin-top:.8rem;
-  background:#fff;
-  border-radius:.6rem;
-  padding:.6rem .8rem;
-}
 
 .stats{ display:flex; gap:1rem; }
 .stat{
@@ -483,6 +494,53 @@ body::before{
 
 @media (min-width:36rem){
   .modal{ align-items:center; }
+}
+
+/* ===================== الجوال ===================== */
+@media (max-width:40rem){
+  .screen{ padding:1.4rem 1.1rem 2rem; gap:1.1rem; }
+
+  /* المدخل: تصغير البطل ليظهر زر «ابدأ» دون تمرير على الشاشات القصيرة */
+  .hero-in{ padding:1.3rem 1rem 1.6rem; gap:.7rem; }
+  .hero-emblem{ width:3.2rem; height:3.2rem; border-radius:.7rem; }
+  .hero-note{ font-size:.85rem; }
+  .portrait img{ width:6.2rem; height:6.2rem; }
+  #intro h1{ font-size:1.7rem; }
+  #intro .sub{ font-size:.9rem; }
+  #intro{ padding-top:1rem; gap:1.2rem; }
+
+  .table{ padding:.7rem; gap:.6rem; }
+  .paper{ padding:.6rem .65rem; }
+  .paper .t{ font-size:.78rem; }
+
+  /* صندوق الملفات مثبّت أسفل الشاشة: بدونه كان على اللاعب أن يمرّر
+     أكثر من ١٥٠٠ بكسل بعد كل ورقة ليصل إلى الملف الذي يضعها فيه */
+  .tray{
+    position:sticky; bottom:0; z-index:5;
+    display:flex; gap:.6rem;
+    grid-template-columns:none;
+    overflow-x:auto;
+    scroll-padding-inline:1.1rem;
+    overscroll-behavior-x:contain;
+    margin-inline:-1.1rem;
+    padding:.7rem 1.1rem calc(.7rem + env(safe-area-inset-bottom, 0px));
+    background:rgba(4,33,31,.93);
+    backdrop-filter:blur(.6rem);
+    border-top:1px solid var(--line-2);
+  }
+  .file-slot{
+    flex:0 0 8.5rem;
+    padding:.6rem .7rem;
+    border-top:.22rem solid var(--fcolor);
+  }
+  /* لسان الملف يُقصّ داخل شريط ذي overflow، فيُستبدل بالحد العلوي */
+  .file-slot::before{ display:none; }
+  .file-slot .fn{ font-size:.82rem; }
+
+  /* أهداف لمس أكبر لأزرار التحريك */
+  .mv{ width:2.7rem; height:2.3rem; font-size:.78rem; }
+  .order-item{ padding:.7rem .8rem; gap:.6rem; }
+  .order-item .fn{ font-size:.9rem; }
 }
 
 /* ===================== أدوات مساعدة ===================== */
